@@ -1,0 +1,33 @@
+Rank 1  Eqn 8057  ADS(a,b,c,d,e,f)
+
+r2 Coef Det    	DF Adj r2      	Fit Std Err    	F-value
+0.9712463998   	0.9691424778   	5.1906143797   	560.71900916
+
+ Parm  	Value        	Std Error    	t-value      	95% Confidence Limits     	P>|t|
+ a    	0.387710147  	0.726123713  	0.533945029  	-1.05652071  	1.831941008  	0.59481
+ b    	411.1685011  	584.8794396  	0.702997017  	-752.133181  	1574.470183  	0.48402
+ c    	3.668893958  	1.300200853  	2.821790148  	1.082846754  	6.254941162  	0.00597
+ d    	1e-12        	4.319274510  	2.3152e-13   	-8.59086328  	8.590863281  	1.00000
+ e    	1.767115687  	0.322036310  	5.487318143  	1.126598418  	2.407632955  	0.00000
+ f    	0.976073627  	0.083281811  	11.72012974  	0.810429455  	1.141717799  	0.00000
+
+Area Xmin-Xmax 	Area Precision
+598.43603633   	1.970289e-09
+Function min   	X-Value        	Function max   	X-Value
+0.3878427042   	18.258500000   	111.52745436   	2.9760452732
+1st Deriv min  	X-Value        	1st Deriv max  	X-Value
+-38.07208583   	4.6124014324   	28.635008435   	1.3144136365
+2nd Deriv min  	X-Value        	2nd Deriv max  	X-Value
+-35.44285660   	3.1916875029   	15.182640918   	5.7235159197
+
+Procedure      	Minimization   	Iterations
+LevMarqdt      	Least Squares  	33          
+r2 Coef Det    	DF Adj r2      	Fit Std Err    	Max Abs Err
+0.9712463998   	0.9691424778   	5.1906143797   	25.632408663
+Source   	Sum of Squares    	DF      	Mean Square        	F Statistic      	P>F
+Regr     	75535.797         	5       	15107.159          	560.719          	0.00000
+Error    	2236.2256         	83      	26.942478      
+Total    	77772.022         	88  
+
+Date           	Time           	File Source
+May 15, 2023   	9:17:38 PM     	c:\users\eric\desktop\logp.txt          

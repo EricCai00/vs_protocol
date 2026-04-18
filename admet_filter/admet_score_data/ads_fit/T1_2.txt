@@ -1,0 +1,33 @@
+Rank 1  Eqn 8057  ADS(a,b,c,d,e,f)
+
+r2 Coef Det    	DF Adj r2      	Fit Std Err    	F-value
+0.9705031779   	0.9631289724   	8.9838280521   	164.50978615
+
+ Parm  	Value        	Std Error    	t-value      	95% Confidence Limits     	P>|t|
+ a    	3.794290591  	3.215276295  	1.180082283  	-2.82769489  	10.41627608  	0.24907
+ b    	184.2565890  	52.61817593  	3.501766942  	75.88742716  	292.6257509  	0.00176
+ c    	1.714930942  	0.057889891  	29.62401425  	1.595704481  	1.834157404  	0.00000
+ d    	0.740145270  	0.230571527  	3.210046267  	0.265274321  	1.215016220  	0.00363
+ e    	0.293348712  	0.070090625  	4.185277468  	0.148994368  	0.437703056  	0.00031
+ f    	0.140594426  	0.030434763  	4.619534188  	0.077912859  	0.203275993  	0.00010
+
+Area Xmin-Xmax 	Area Precision
+154.64946960   	2.807065e-15
+Function min   	X-Value        	Function max   	X-Value
+3.8187188450   	3.3401040913   	138.68404392   	1.7641289934
+1st Deriv min  	X-Value        	1st Deriv max  	X-Value
+-284.4740793   	2.1105352595   	153.39040385   	1.3146420714
+2nd Deriv min  	X-Value        	2nd Deriv max  	X-Value
+-1091.317267   	1.9042337515   	790.63620154   	2.2855630151
+
+Procedure      	Minimization   	Iterations
+LevMarqdt      	Least Squares  	35          
+r2 Coef Det    	DF Adj r2      	Fit Std Err    	Max Abs Err
+0.9705031779   	0.9631289724   	8.9838280521   	23.483756474
+Source   	Sum of Squares    	DF      	Mean Square        	F Statistic      	P>F
+Regr     	66387.239         	5       	13277.448          	164.51           	0.00000
+Error    	2017.7292         	25      	80.709166      
+Total    	68404.968         	30  
+
+Date           	Time           	File Source
+May 15, 2023   	8:20:51 PM     	c:\users\eric\desktop\histogram_5.1.10

@@ -1,0 +1,33 @@
+Rank 1  Eqn 8057  ADS(a,b,c,d,e,f)
+
+r2 Coef Det    	DF Adj r2      	Fit Std Err    	F-value
+0.9655149912   	0.9612043650   	7.6275352339   	274.38145528
+
+ Parm  	Value        	Std Error    	t-value      	95% Confidence Limits     	P>|t|
+ a    	2.670244460  	1.470395054  	1.816004789  	-0.28462503  	5.625113950  	0.07549
+ b    	529.3035013  	941.9757625  	0.561907771  	-1363.66766  	2422.274667  	0.57674
+ c    	3.064084509  	0.198108395  	15.46670702  	2.665970783  	3.462198234  	0.00000
+ d    	1e-12        	0.630978124  	1.58484e-12  	-1.26799801  	1.267998012  	1.00000
+ e    	0.207280955  	0.050161308  	4.132287668  	0.106478032  	0.308083878  	0.00014
+ f    	0.109411990  	0.011569403  	9.457012903  	0.086162405  	0.132661576  	0.00000
+
+Area Xmin-Xmax 	Area Precision
+96.791518605   	1.374663e-11
+Function min   	X-Value        	Function max   	X-Value
+2.6734401418   	0.5730833776   	147.30165182   	2.9799729776
+1st Deriv min  	X-Value        	1st Deriv max  	X-Value
+-438.6658743   	3.1662924896   	321.18705964   	2.7902601991
+2nd Deriv min  	X-Value        	2nd Deriv max  	X-Value
+-3554.754195   	3.0068083874   	1553.6390745   	3.2916035458
+
+Procedure      	Minimization   	Iterations
+LevMarqdt      	Least Squares  	31          
+r2 Coef Det    	DF Adj r2      	Fit Std Err    	Max Abs Err
+0.9655149912   	0.9612043650   	7.6275352339   	23.650178309
+Source   	Sum of Squares    	DF      	Mean Square        	F Statistic      	P>F
+Regr     	79816.596         	5       	15963.319          	274.381          	0.00000
+Error    	2850.7854         	49      	58.179294      
+Total    	82667.382         	54  
+
+Date           	Time           	File Source
+May 15, 2023   	9:16:48 PM     	c:\users\eric\desktop\ld50_of_acute_to

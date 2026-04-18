@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Protocol - 虚拟筛选流程管理</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <h1>虚拟筛选流程管理系统</h1>
+            <p class="subtitle">VS Protocol Web Interface</p>
+        </header>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 左侧面板 - 配置管理 -->
+            <div class="left-panel">
+                <div class="panel">
+                    <h2>📋 配置管理</h2>
+                    
+                    <!-- 配置文件选择 -->
+                    <div class="config-selector">
+                        <label for="config-select">选择配置文件：</label>
+                        <select id="config-select" class="form-control">
+                            <option value="">-- 加载中 --</option>
+                        </select>
+                        <button id="refresh-configs" class="btn btn-secondary">🔄 刷新</button>
+                    </div>
+
+                    <!-- 配置编辑器（标签页 + 逐字段编辑） -->
+                    <div class="config-editor">
+                        <h3>配置编辑器</h3>
+                        <div class="editor-toolbar">
+                            <div class="save-as-group">
+                                <input id="save-path" class="form-control" placeholder="另存为文件名（例如：config_new.yaml）" />
+                                <button id="save-as-config" class="btn btn-primary">💾 另存为</button>
+                            </div>
+                            <div class="spacer"></div>
+                            <button id="save-config" class="btn btn-primary">💾 保存</button>
+                            <button id="reset-config" class="btn btn-secondary">↩️ 重置</button>
+                        </div>
+
+                        <!-- 标签页头部 -->
+                        <div class="tab-headers" id="tab-headers">
+                            <!-- 动态生成：每个标签页包含模块名称与启用复选框 -->
+                        </div>
+
+                        <!-- 标签页内容区域 -->
+                        <div class="tab-contents" id="tab-contents">
+                            <div class="tab-placeholder">请选择或加载配置文件以编辑。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧面板 - 流程控制和监控 -->
+            <div class="right-panel">
+                <!-- 流程控制 -->
+                <div class="panel">
+                    <h2>🚀 流程控制</h2>
+                    <div class="control-buttons">
+                        <button id="start-btn" class="btn btn-success btn-large">▶️ 启动流程</button>
+                        <button id="stop-btn" class="btn btn-danger btn-large" disabled>⏹️ 停止流程</button>
+                    </div>
+                    
+                    <div class="status-info">
+                        <div class="status-item">
+                            <span class="label">状态：</span>
+                            <span id="status-text" class="status-badge status-idle">空闲</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">当前模块：</span>
+                            <span id="current-module">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="label">开始时间：</span>
+                            <span id="start-time">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 进度显示 -->
+                <div class="panel">
+                    <h2>📊 运行进度</h2>
+                    
+                    
+                    <!-- 模块流程图 -->
+                    <div class="pipeline-flow">
+                        <div class="flow-item" data-module="library">
+                            <div class="flow-icon">1</div>
+                            <div class="flow-name">库预处理</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item" data-module="receptor">
+                            <div class="flow-icon">2</div>
+                            <div class="flow-name">受体准备</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item" data-module="prescreening">
+                            <div class="flow-icon">3</div>
+                            <div class="flow-name">预筛选</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item" data-module="prepare_ligand">
+                            <div class="flow-icon">4</div>
+                            <div class="flow-name">分子准备</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item" data-module="docking">
+                            <div class="flow-icon">5</div>
+                            <div class="flow-name">分子对接</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item" data-module="result">
+                            <div class="flow-icon">6</div>
+                            <div class="flow-name">结果分析</div>
+                        </div>
+                    </div>
+
+                    <!-- 分子准备进度 -->
+                    <div class="module-progress-section" id="prepare-ligand-section" style="display: none;">
+                        <h3>分子准备 (Prepare Ligand)</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div id="prepare-ligand-fill" class="progress-fill" style="width: 0%">
+                                    <span id="prepare-ligand-text">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 分子对接进度 -->
+                    <div class="module-progress-section" id="unidock-section" style="display: none;">
+                        <h3>分子对接 (UniDock)</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div id="unidock-fill" class="progress-fill" style="width: 0%">
+                                    <span id="unidock-text">0/0 (0%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 日志输出 -->
+                <div class="panel">
+                    <h2>📝 运行日志</h2>
+                    <div class="log-controls">
+                        <button id="clear-log" class="btn btn-secondary btn-small">🗑️ 清空日志</button>
+                        <button id="download-log" class="btn btn-secondary btn-small">⬇️ 下载日志</button>
+                        <label>
+                            <input type="checkbox" id="auto-scroll" checked> 自动滚动
+                        </label>
+                    </div>
+                    <div id="log-container" class="log-container">
+                        <div class="log-entry log-info">
+                            <span class="log-time">--:--:--</span>
+                            <span class="log-message">等待启动流程...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+

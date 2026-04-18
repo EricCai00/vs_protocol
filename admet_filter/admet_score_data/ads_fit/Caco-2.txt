@@ -1,0 +1,33 @@
+Rank 1  Eqn 8057  ADS(a,b,c,d,e,f)
+
+r2 Coef Det    	DF Adj r2      	Fit Std Err    	F-value
+0.9703265426   	0.9584571597   	12.697297875   	104.64048387
+
+ Parm  	Value        	Std Error    	t-value      	95% Confidence Limits     	P>|t|
+ a    	5.612275853  	5.176688344  	1.084144047  	-5.36181321  	16.58636491  	0.29437
+ b    	184.0800121  	21.81125996  	8.439678057  	137.8422065  	230.3178177  	0.00000
+ c    	-4.80733516  	0.036049254  	-133.354638  	-4.88375616  	-4.73091415  	0.00000
+ d    	0.967814546  	0.093209338  	10.38323590  	0.770219576  	1.165409516  	0.00000
+ e    	0.274334263  	0.062022401  	4.423148080  	0.142852647  	0.405815879  	0.00043
+ f    	0.055076984  	0.014436849  	3.815028160  	0.024472232  	0.085681736  	0.00152
+
+Area Xmin-Xmax 	Area Precision
+196.52737832   	1.371555e-12
+Function min   	X-Value        	Function max   	X-Value
+5.8291401164   	-7.140989301   	175.40602369   	-4.561385913
+1st Deriv min  	X-Value        	1st Deriv max  	X-Value
+-802.5704607   	-4.321938029   	167.75152622   	-5.291243239
+2nd Deriv min  	X-Value        	2nd Deriv max  	X-Value
+-5832.074881   	-4.395251000   	5613.1902507   	-4.249897163
+
+Procedure      	Minimization   	Iterations
+LevMarqdt      	Least Squares  	27          
+r2 Coef Det    	DF Adj r2      	Fit Std Err    	Max Abs Err
+0.9703265426   	0.9584571597   	12.697297875   	26.896059613
+Source   	Sum of Squares    	DF      	Mean Square        	F Statistic      	P>F
+Regr     	84351.413         	5       	16870.283          	104.64           	0.00000
+Error    	2579.542          	16      	161.22137      
+Total    	86930.955         	21  
+
+Date           	Time           	File Source
+May 15, 2023   	8:17:30 PM     	c:\users\eric\desktop\caco-2.txt        

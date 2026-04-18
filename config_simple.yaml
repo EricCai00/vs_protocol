@@ -1,0 +1,101 @@
+working_directory: /public/home/caiyi/data/vs_protocol
+project_name: my_project
+
+start_module: library
+receptor_pdb: /public/home/caiyi/data/vs_protocol/input/receptor.pdb
+ref_ligand_file: ''
+library_smiles: /public/home/caiyi/data/vs_protocol/input/library.smi
+
+library:
+  active: true
+  threads: 60
+
+receptor:
+  active: true
+
+physicochemical:
+  active: false
+  perform_phychem_predict: true
+  threads: 60
+
+  perform_phychem_filter: true
+  mw_lower: 200
+  mw_upper: 600
+  logp_lower: 0
+  logp_upper: 5
+  nha_lower: -inf
+  nha_upper: 12
+  nhd_upper: 5
+  nrot_upper: 11
+  nring_upper: 6
+  maxring_upper: 18
+  nstereo_upper: 2
+  tpsa_upper: 140
+  qed_lower: 0.4
+  sascore_upper: 5
+  count_lower: 11
+
+admet:
+  active: false
+  perform_admet_prepare: true
+  admet_prepare_threads: 60
+
+  perform_admet_predict: true
+  admet_predict_chunk: 100000
+  admet_predict_threads: 30
+
+  perform_admet_score: true
+  perform_admet_filter: true
+  admet_score_lower: 0.41
+  hia_upper: .inf
+  f20_upper: .inf
+  f30_upper: .inf
+  vd_lower: -.inf
+  vd_upper: .inf
+  cl_lower: -.inf
+  cl_upper: .inf
+  caco2_lower: -.inf
+  herg_upper: .inf
+  hht_upper: .inf
+  ames_upper: .inf
+  cyp2d6_sub_upper: .inf
+  pgp_sub_upper: .inf
+
+druglikeness:
+  active: true
+  perform_dln_pred: true
+  perform_dln_filter: true
+  gpu_num: 4
+  dln_count_lower: 3
+
+prepare_ligand:
+  active: true
+  dock_strategy: single
+  perform_prepare: true
+  num_conformers: 1
+  gen_conf_threads: 10
+  rdkit_threads: 0
+  prepare_threads: 90
+
+docking:
+  active: true
+  perform_dock: true
+  config_file: auto
+  dock_threads: 4
+  search_mode: fast
+  list_file: null
+  output_suffix: ''
+  verbose: false
+
+  perform_extract: true
+  extract_threads: 40
+
+  perform_hbond: true
+  method: pymol
+  hbond_threads: 40
+  cutoff: 3.5
+  perform_residue_filter: true
+  key_residues: 57,67,59,82,133,136
+
+result:
+  active: false

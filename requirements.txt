@@ -1,0 +1,73 @@
+# ==============================================================
+# VS Protocol - Virtual Screening Pipeline
+# Requirements
+# ==============================================================
+
+# --------------------------------------------------------------
+# Web Interface (Flask + WebSocket)
+# --------------------------------------------------------------
+Flask==3.0.0
+flask-socketio==5.3.5
+python-socketio==5.10.0
+gevent==23.9.1
+gevent-websocket==0.10.1
+
+# --------------------------------------------------------------
+# Core Scientific Stack
+# --------------------------------------------------------------
+numpy>=1.24
+pandas>=2.0
+PyYAML>=6.0
+tqdm>=4.65
+h5py>=3.9
+python-dateutil>=2.8
+
+# ProDy (protein structure analysis)
+prody>=2.4
+
+# RDKit - strongly recommended via conda:
+#   conda install -c conda-forge rdkit
+# pip fallback (unofficial):
+# rdkit-pypi>=2022.9
+
+# --------------------------------------------------------------
+# Physicochemical Filtering (pc_filter)
+# --------------------------------------------------------------
+# PyBioMed - install via:
+#   pip install git+https://github.com/gadsbyfly/PyBioMed.git
+# or:
+#   conda install -c conda-forge pybiomed
+
+# --------------------------------------------------------------
+# ADMET Filtering (admet_filter)
+# --------------------------------------------------------------
+scikit-learn>=1.3
+joblib>=1.3
+
+# --------------------------------------------------------------
+# Druglikeness Prediction (druglikeness)
+# PyTorch + HuggingFace Transformers + datasets
+# Install PyTorch separately matching your CUDA version:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu118
+# --------------------------------------------------------------
+transformers>=4.30
+datasets>=2.14
+
+# --------------------------------------------------------------
+# Docking (docking)
+# --------------------------------------------------------------
+# Biopython (for hbond_plip)
+biopython>=1.81
+# PLIP - install via:
+#   conda install -c conda-forge plip
+# or:
+#   pip install plip
+
+# --------------------------------------------------------------
+# External Tools (not pip-installable, install separately)
+# --------------------------------------------------------------
+# - UniDock:         https://github.com/dptech-corp/Uni-Dock
+# - prepare_receptor: part of ADFR Suite / AutoDock Tools
+#                     https://ccsb.scripps.edu/adfr/downloads/
+# - PyMOL:           https://pymol.org  (for hbond_pymol.py)
+#                    conda install -c conda-forge pymol-open-source

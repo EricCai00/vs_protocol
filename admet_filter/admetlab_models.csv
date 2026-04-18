@@ -1,0 +1,33 @@
+Property,Type,Method,Descriptor,Length,Model path
+Ames,Classification,RF,MACCS,167,classification_model/AMES/AMES_Model.pkl
+SkinSen,Classification,RF,MACCS,167,classification_model/SkinSen/model_*.pkl
+DILI,Classification,RF,MACCS,167,
+HIA,Classification,RF,MACCS,167,classification_model/HIA/model_*.pkl
+F (20%),Classification,RF,MACCS,167,classification_model/F-20/model_*.pkl
+F (30%),Classification,RF,ECFP6_2048,2048,classification_model/F-30/model_*.pkl
+Pgp-substrate,Classification,SVM,ECFP4_2048,2048,PGP_substrate/PGP_substrate_SVC_ecfp4_model.pkl
+CYP1A2-Inhibitor,Classification,SVM,ECFP4_2048,2048,classification_model/CYP1A2-inhibitor/CYP_inhibitor_1A2_SVC_ecfp4_model.pkl
+CYP1A2-Substrate,Classification,RF,ECFP4_1024,1024,classification_model/CYP1A2-substrate/1a2sub.pkl
+CYP3A4-Inhibitor,Classification,SVM,ECFP4_2048,2048,classification_model/CYP3A4-inhibitor/CYP_inhibitor_3A4_SVC_ecfp4_model.pkl
+CYP3A4-Substrate,Classification,RF,ECFP4_1024,1024,classification_model/CYP3A4-substrate/3a4sub.pkl
+CYP2C19-Substrate,Classification,RF,ECFP4_1024,1024,classification_model/CYP2C19-substrate/2c19sub.pkl
+CYP2C9-Inhibitor,Classification,SVM,ECFP4_2048,2048,classification_model/CYP2C9-inhibitor/CYP_inhibitor_2C9_SVC_ecfp4_model.pkl
+CYP2C9-Substrate,Classification,RF,ECFP4_1024,1024,classification_model/CYP2C9-substrate/model_*.pkl
+CYP2D6-Inhibitor,Classification,RF,ECFP4_1024,1024,classification_model/CYP2D6-inhibitor/model_*.pkl
+CYP2D6-Substrate,Classification,RF,ECFP4_1024,1024,classification_model/CYP2D6-substrate/model_*.pkl
+FDAMDD,Classification,RF,ECFP4,,
+Pgp-inhibitor,Classification,SVM,ECFP4_2048,2048,classification_model/Pgp-inhibitor/PGP_inhibitor_SVC_ecfp4_model.pkl
+CYP2C19-Inhibitor,Classification,SVM,ECFP2_2048,2048,classification_model/CYP2C19-inhibitor/CYP_inhibitor_2C19_SVC_ecfp2_model.pkl
+BBB,Classification,SVM,ECFP2_2048,2048,classification_model/BBB/BBB_RF_ecfp2_model.pkl
+LogS,Regression,RF,2D,40,regression_model/logS/logS_Model.pkl
+LogD7.4,Regression,RF,2D,35,regression_model/logD/logD_Model.pkl
+Caco-2,Regression,RF,2D,30,regression_model/caco2/caco2_Model.pkl
+PPB,Regression,RF,2D,30,regression_model/PPB/PPB_Model.pkl
+VD,Regression,RF,2D,45,regression_model/VD/VD_Model.pkl
+CL,Regression,RF,2D,40,regression_model/CL/CL_Model.pkl
+T1/2,Regression,RF,2D,50,regression_model/T/T_Model.pkl
+LD50 of acute toxicity,Regression,RF,2D,32,regression_model/LD50/LD50_Model.pkl
+hERG,Classification,RF,2D,47,classification_model/hERG/hERG_Model.pkl
+H-HT,Classification,RF,2D,89,classification_model/HHT/HHT_Model.pkl
+druglikeness,Classification,RF,ECFP4_1024,1024,classification_model/druglikeness/druglikeness.pkl
+LogP,Regression,RDKit,,,
