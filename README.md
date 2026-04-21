@@ -8,16 +8,14 @@ A web-based tool for end-to-end virtual screening (VS) workflows: configuration 
 
 ```
 Library prep → Receptor prep → Prescreening → Ligand prep → Docking → Results analysis
-     (1)            (2)         (3a–3c)          (4)          (5)          (6)
+     (1)            (2)         (3)          (4)          (5)          (6)
 ```
 
 | Step | Module | Description |
 |------|--------|-------------|
 | 1 | Library preprocessing | SMILES normalization, deduplication, salt stripping |
 | 2 | Receptor preparation | PDB cleanup → PDBQT, automatic docking box extraction |
-| 3a | Prescreening — physicochemical | Physicochemical property prediction and filters |
-| 3b | Prescreening — ADMET | ADMETLab-style prediction, scoring, and filters |
-| 3c | Prescreening — drug-likeness | Deep-learning drug-likeness models and filters |
+| 3 | Prescreening | Physicochemical / ADMET / drug-likeness filters (each can be enabled independently) |
 | 4 | Ligand preparation | 3D conformer generation, conversion to PDBQT |
 | 5 | Docking | UniDock scoring, pose extraction, H-bond key-residue filtering |
 | 6 | Results analysis | Consolidate outputs from docking with upstream context into ranked hit lists, summaries, and export-ready reports for triage.|
