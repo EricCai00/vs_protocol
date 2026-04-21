@@ -1,31 +1,21 @@
 working_directory: /public/home/caiyi/data/vs_protocol
-project_name: loose
+project_name: my_project
 
-# start_module: receptor_prep
-start_module: physicochemical
-receptor_pdb: /public/home/caiyi/data/vs_protocol/input/plk1_2rku.pdb
-# library_smiles: /public/home/caiyi/data/vs_protocol/input/targetmol_filtered.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/loose/module_1/library_filtered_phychem.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/loose/module_2/admetlab_input_loose.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/loose/module_2/library_filtered_admet.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/loose/module_3/library_filtered_substructure.smi
-library_smiles: /public/home/caiyi/data/vs_protocol/loose/module_3/library_filtered_druglikeness.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/loose/module_4/library_filtered_key_residues.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/input/smiles_prepared_0.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/input/head1000.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/tryout/module_3/library_filtered_similarity.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/tryout/module_4/library_filtered_key_residues.smi
-# library_smiles: /public/home/caiyi/data/vs_protocol/tryout/module_5/cluster_representatives.smi
+start_module: library
+receptor_pdb: /public/home/caiyi/data/vs_protocol/input/receptor.pdb
+ref_ligand_file: ''
+library_smiles: /public/home/caiyi/data/vs_protocol/input/library.smi
 
 library:
-  active: false
+  active: true
   threads: 60
 
-module1:
-  # active: true
+receptor:
+  active: true
+
+physicochemical:
   active: false
-  # perform_phychem_predict: true
-  perform_phychem_predict: false
+  perform_phychem_predict: true
   threads: 60
 
   perform_phychem_filter: true
@@ -45,145 +35,73 @@ module1:
   sascore_upper: 5
   count_lower: 11
 
-module2:
-  # active: true
+admet:
   active: false
-  # perform_admet_prepare: true
-  perform_admet_prepare: false
+  perform_admet_prepare: true
   admet_prepare_threads: 60
 
-  # perform_admet_predict: true
-  perform_admet_predict: false
+  perform_admet_predict: true
   admet_predict_chunk: 100000
   admet_predict_threads: 30
 
-  # perform_admet_score: true
-  perform_admet_score: false
-  # perform_admet_filter: true
+  perform_admet_score: true
   perform_admet_filter: true
-  # perform_admet_filter: false
   admet_score_lower: 0.41
-  hia_upper: inf
-  f20_upper: inf
-  f30_upper: inf
-  vd_lower: -inf
-  vd_upper: inf
-  cl_lower: -inf
-  cl_upper: inf
-  caco2_lower: -inf
-  herg_upper: inf
-  hht_upper: inf
-  ames_upper: inf
-  cyp2d6_sub_upper: inf
-  pgp_sub_upper: inf
+  hia_upper: .inf
+  f20_upper: .inf
+  f30_upper: .inf
+  vd_lower: -.inf
+  vd_upper: .inf
+  cl_lower: -.inf
+  cl_upper: .inf
+  caco2_lower: -.inf
+  herg_upper: .inf
+  hht_upper: .inf
+  ames_upper: .inf
+  cyp2d6_sub_upper: .inf
+  pgp_sub_upper: .inf
 
-receptor:
+druglikeness:
   active: true
-  # active: false
+  perform_dln_pred: true
+  perform_dln_filter: true
+  gpu_num: 4
+  dln_count_lower: 3
 
-module3:
-  # active: true
-  active: false
-  
-  substructure:
-    # perform_substruct: true
-    perform_substruct: false
-    substruct_list: /public/home/caiyi/data/vs_protocol/input/substructures.txt
-
-  similarity:
-    # perform_simi: true
-    perform_simi: false
-    similarity_query: /public/home/caiyi/data/vs_protocol/input/simi_query.smi
-    # 'auto' to use all available CPUs
-    num_threads: 64
-    radius: 2
-    threshold: 0.2
-
-  druglikeness:
-    perform_dln_pred: true
-    # perform_dln_pred: false
-    perform_dln_filter: true
-    gpu_num: 4
-    dln_count_lower: 3
-    verbose: true
-
-module4:
+prepare_ligand:
   active: true
-  # active: false
-  docking_method: unidock
-  
-  unidock:
-    dock_strategy: single
-    # perform_prepare: true
-    perform_prepare: false
-    # num_conformers: 20
-    num_conformers: 1
-    gen_conf_threads: 10
-    rdkit_threads: 0
-    prepare_threads: 90
+  dock_strategy: single
+  perform_prepare: true
+  num_conformers: 1
+  gen_conf_threads: 10
+  rdkit_threads: 0
+  prepare_threads: 90
 
-    perform_dock: true
-    # perform_dock: false
-    config_file: auto
-    dock_threads: 4
-    search_mode: fast
-    list_file: /public/home/caiyi/data/vs_protocol/loose/module_4/loose_not_docked.txt
-
-    perform_extract: true
-    # perform_extract: false
-    extract_threads: 40
-
-  # deep_docking:
-  #   config_file: auto
-  #   total_iters: 11
-  #   sampling_size: 1000
-
-  hbond:
-    perform_hbond: true
-    # perform_hbond: false
-    method: pymol
-    threads: 40
-    cutoff: 3.5
-    perform_residue_filter: true
-    key_residues: 57,67,59,82,133,136
-
-
-module5:
+docking:
   active: true
-  # active: false
-  perform_generate_fp: true
-  # perform_generate_fp: false
-  generate_fp_threads: 64
-  fp_nbits: 1024
-  fp_radius: 2
-
-  perform_cluster: true
-  threshold: 0.8
-
-module6:
-  active: true
-  # active: false
-  perform_hba: true
-
-  perform_off_target: true
-  # perform_off_target: false
-  targets_dir: /public/home/caiyi/data/vs_protocol/input/off_target
+  perform_dock: true
+  config_file: auto
   dock_threads: 4
+  search_mode: fast
+  list_file: null
+  output_suffix: ''
+  verbose: false
+
+  perform_extract: true
   extract_threads: 40
 
-module7:
-  # active: true
-  active: false
-  weight_physico: 1
-  weight_admet: 1
-  weight_dock: 1
-  weight_pred_md: 1
-  weight_off_target: 1
+  perform_hbond: true
+  method: pymol
+  hbond_threads: 40
+  cutoff: 3.5
+  perform_residue_filter: true
+  key_residues: 57,67,59,82,133,136
 
-module8:
-  # active: true
+result:
   active: false
-  config_path: /public/home/caiyi/data/vs_protocol/input/md_config
-  threads: 4
-  num_md_mols: 10
-  
+  top_n: 500              # number of top-ranked hits included in the focused report
+  weight_docking: 1.0     # composite-score weight for normalised docking score
+  weight_hbond: 0.5       # composite-score weight for key-residue H-bond count
+  weight_admet: 0.5       # composite-score weight for ADMET score
+  weight_druglikeness: 0.3  # composite-score weight for drug-likeness model consensus
+  export_html: false      # also write an HTML report for the top-N hits

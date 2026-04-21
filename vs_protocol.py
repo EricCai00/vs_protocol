@@ -28,6 +28,8 @@ from docking.extract_vina_score import extract_scores
 from docking.hbond_plip import count_hbonds_batch as count_hbonds_plip
 from docking.hbond_pymol import run_hbond_analysis as count_hbonds_pymol
 
+from result_analysis.result_analysis import run_result_analysis
+
 # --- Global Paths ---
 PREPARE_RECEPTOR = '/public/home/caiyi/install/bin/prepare_receptor'
 BASH = shutil.which("bash") or "/usr/bin/bash"
@@ -36,14 +38,14 @@ REPO_PATH = pathlib.Path(__file__).parent.resolve()
 ADMETLAB_PREDICT = f'{REPO_PATH}/admet_filter/admetlab_predict.py'
 
 MODULE_ORDER = [
-    "library",          # 0: 库预处理
-    "receptor",         # 1: 受体准备
-    "physicochemical",  # 2: 理化性质筛选
-    "admet",            # 3: ADMET筛选
-    "druglikeness",     # 4: 类药性预测
-    "prepare_ligand",   # 5: 分子准备
-    "docking",          # 6: 分子对接
-    "result",           # 7: 结果分析
+    "library",           # 1: Library preprocessing (README step 1)
+    "receptor",          # 2: Receptor preparation (README step 2)
+    "physicochemical",   # 3a: Prescreening — physicochemical (README step 3)
+    "admet",             # 3b: Prescreening — ADMET
+    "druglikeness",      # 3c: Prescreening — drug-likeness
+    "prepare_ligand",    # 4: Ligand preparation (README step 4)
+    "docking",           # 5: Docking (README step 5)
+    "result",            # 6: Results analysis (README step 6)
 ]
 
 
@@ -91,21 +93,21 @@ def main():
     clean_pdb = os.path.join(receptor_dir, f"{project_name}_clean.pdb")
     receptor_pdbqt = os.path.join(receptor_dir, f"{project_name}_clean.pdbqt")
 
-    # ==================== MODULE 0: Library Preprocessing ====================
+    # ==================== MODULE 1: Library Preprocessing ====================
     config_library = config.get('library', {})
     if config_library.get('active', False):
-        print("-------------------- MODULE 0: Library Preprocessing --------------------")
+        print("-------------------- MODULE 1: Library Preprocessing --------------------")
         processed_library = os.path.join(project_dir, 'library_preprocessed.smi')
         library_preprocess(current_library, processed_library,
                            threads=config_library.get('threads', 60))
         current_library = processed_library
     else:
-        print("SKIPPING MODULE 0: Library Preprocessing.")
+        print("SKIPPING MODULE 1: Library Preprocessing.")
 
-    # ==================== MODULE 1: Receptor Preparation ====================
+    # ==================== MODULE 2: Receptor Preparation ====================
     config_receptor = config.get('receptor', {})
     if should_run('receptor', start_module) and config_receptor.get('active', False):
-        print("-------------------- MODULE 1: Receptor Preparation --------------------")
+        print("-------------------- MODULE 2: Receptor Preparation --------------------")
         if ref_ligand_file:
             gen_config_mol2(
                 mol2_path=ref_ligand_file,
@@ -126,13 +128,13 @@ def main():
             '-A', 'hydrogens'
         ], step_name='Prepare Receptor')
     else:
-        print("SKIPPING MODULE 1: Receptor Preparation.")
+        print("SKIPPING MODULE 2: Receptor Preparation.")
 
-    # ==================== MODULE 2: Physicochemical Screening ====================
+    # ==================== MODULE 3a: Physicochemical Screening ====================
     config_pc = config.get('physicochemical', {})
     pc_dir = os.path.join(project_dir, 'physicochemical')
     if should_run('physicochemical', start_module) and config_pc.get('active', False):
-        print("-------------------- MODULE 2: Physicochemical Screening --------------------")
+        print("-------------------- MODULE 3a: Physicochemical Screening --------------------")
         os.makedirs(pc_dir, exist_ok=True)
         physchem_file = f'{pc_dir}/physchem.csv'
         if config_pc.get('perform_phychem_predict', False):
@@ -171,13 +173,13 @@ def main():
                 sel_names
             )
     else:
-        print("SKIPPING MODULE 2: Physicochemical Screening.")
+        print("SKIPPING MODULE 3a: Physicochemical Screening.")
 
-    # ==================== MODULE 3: ADMET Screening ====================
+    # ==================== MODULE 3b: ADMET Screening ====================
     config_admet = config.get('admet', {})
     admet_dir = os.path.join(project_dir, 'admet')
     if should_run('admet', start_module) and config_admet.get('active', False):
-        print("-------------------- MODULE 3: ADMET Screening --------------------")
+        print("-------------------- MODULE 3b: ADMET Screening --------------------")
         os.makedirs(admet_dir, exist_ok=True)
         if config_admet.get('perform_admet_prepare', False):
             print("\n-------- ADMET: Prepare FPs & descriptors --------")
@@ -240,13 +242,13 @@ def main():
                 sel_names
             )
     else:
-        print("SKIPPING MODULE 3: ADMET Screening.")
+        print("SKIPPING MODULE 3b: ADMET Screening.")
 
-    # ==================== MODULE 4: Druglikeness Screening ====================
+    # ==================== MODULE 3c: Druglikeness Screening ====================
     config_dln = config.get('druglikeness', {})
     dln_dir = os.path.join(project_dir, 'druglikeness')
     if should_run('druglikeness', start_module) and config_dln.get('active', False):
-        print("-------------------- MODULE 4: Druglikeness Screening --------------------")
+        print("-------------------- MODULE 3c: Druglikeness Screening --------------------")
         os.makedirs(dln_dir, exist_ok=True)
         if config_dln.get('perform_dln_pred', False):
             print("-------- Druglikeness: Prediction --------")
@@ -276,14 +278,14 @@ def main():
                 sel_names
             )
     else:
-        print("SKIPPING MODULE 4: Druglikeness Screening.")
+        print("SKIPPING MODULE 3c: Druglikeness Screening.")
 
-    # ==================== MODULE 5: Molecular Preparation ====================
+    # ==================== MODULE 4: Molecular Preparation ====================
     config_prep = config.get('prepare_ligand', {})
     prep_dir = os.path.join(project_dir, 'prepare_ligand')
     ligand_pdbqt_dir = os.path.join(prep_dir, f'{project_name}_pdbqt')
     if should_run('prepare_ligand', start_module) and config_prep.get('active', False):
-        print("-------------------- MODULE 5: Molecular Preparation --------------------")
+        print("-------------------- MODULE 4: Molecular Preparation --------------------")
         os.makedirs(prep_dir, exist_ok=True)
         os.makedirs(ligand_pdbqt_dir, exist_ok=True)
         dock_strategy = config_prep.get('dock_strategy', 'single')
@@ -322,14 +324,14 @@ def main():
         else:
             print('Skipping preparing molecules.')
     else:
-        print("SKIPPING MODULE 5: Molecular Preparation.")
+        print("SKIPPING MODULE 4: Molecular Preparation.")
 
-    # ==================== MODULE 6: Molecular Docking ====================
+    # ==================== MODULE 5: Molecular Docking ====================
     config_dock = config.get('docking', {})
     dock_dir = os.path.join(project_dir, 'docking')
     docked_dir = os.path.join(dock_dir, f"{project_name}_docked{config_dock.get('output_suffix', '')}")
     if should_run('docking', start_module) and config_dock.get('active', False):
-        print("-------------------- MODULE 6: Molecular Docking --------------------")
+        print("-------------------- MODULE 5: Molecular Docking --------------------")
         os.makedirs(dock_dir, exist_ok=True)
 
         if config_dock.get('perform_dock', False):
@@ -420,15 +422,29 @@ def main():
         else:
             print('Skipping H-bond analysis.')
     else:
-        print("SKIPPING MODULE 6: Molecular Docking.")
+        print("SKIPPING MODULE 5: Molecular Docking.")
 
-    # ==================== MODULE 7: Result Analysis ====================
+    # ==================== MODULE 6: Result Analysis ====================
     config_result = config.get('result', {})
     if should_run('result', start_module) and config_result.get('active', False):
-        print("-------------------- MODULE 7: Result Analysis --------------------")
-        print("Result analysis - not implemented yet.")
+        print("-------------------- MODULE 6: Result Analysis --------------------")
+        run_result_analysis(
+            project_name=project_name,
+            project_dir=project_dir,
+            dock_dir=dock_dir,
+            pc_dir=pc_dir if config.get('physicochemical', {}).get('active', False) else None,
+            admet_dir=admet_dir if config.get('admet', {}).get('active', False) else None,
+            dln_dir=dln_dir if config.get('druglikeness', {}).get('active', False) else None,
+            output_suffix=config_dock.get('output_suffix', ''),
+            top_n=config_result.get('top_n', 500),
+            weight_docking=config_result.get('weight_docking', 1.0),
+            weight_hbond=config_result.get('weight_hbond', 0.5),
+            weight_admet=config_result.get('weight_admet', 0.5),
+            weight_druglikeness=config_result.get('weight_druglikeness', 0.3),
+            export_html=config_result.get('export_html', False),
+        )
     else:
-        print("SKIPPING MODULE 7: Result Analysis.")
+        print("SKIPPING MODULE 6: Result Analysis.")
 
 
 if __name__ == "__main__":
