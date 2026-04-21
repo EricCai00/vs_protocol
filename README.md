@@ -8,7 +8,7 @@ A web-based tool for end-to-end virtual screening (VS) workflows: configuration 
 
 ```
 Library prep → Receptor prep → Prescreening → Ligand prep → Docking → Results analysis
-     (1)            (2)         (3)          (4)          (5)          (6)
+     (1)            (2)            (3)          (4)           (5)          (6)
 ```
 
 | Step | Module | Description |
